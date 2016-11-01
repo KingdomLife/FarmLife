@@ -1,0 +1,11 @@
+author: kugick
+name: FarmLife
+version: 0.1
+main: net.kugick.FarmLife.Main
+commands:
+  FarmLife:
+    description: FarmLife plugin main command.
+  MyFarm:
+    description: MyFarm teleport commmand.
+  Menu:
+    description: FarmLife menu
