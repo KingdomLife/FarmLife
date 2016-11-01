@@ -1,5 +1,5 @@
 package net.kugick.FarmLife;
 
-public class MySql {
+public class MySQL {
 
 }
