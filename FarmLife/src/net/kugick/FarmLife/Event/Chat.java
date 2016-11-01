@@ -1,5 +1,5 @@
 package net.kugick.FarmLife.Event;
 
-public class Chat {
+public class Chat{
 
 }

@@ -1,5 +1,5 @@
 package net.kugick.FarmLife.Menu;
 
-public class Leaderboard {
+public class Leaderboard{
 
 }
