@@ -1,5 +1,8 @@
 package net.kugick.FarmLife.Event;
 
-public class Block{
+import org.bukkit.event.Listener;
 
+public class Block implements Listener{
+
+	//Interaction stuff
 }
