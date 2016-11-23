@@ -10,8 +10,6 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 
-// to use with Multiverse put the following in main class:
-// public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {return new FarmGenerator(farmSchematicFile);} 
 public class FarmGenerator extends ChunkGenerator
 {
 	File farmSchematic;
