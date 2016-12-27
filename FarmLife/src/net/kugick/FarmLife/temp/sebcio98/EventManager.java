@@ -11,6 +11,7 @@ public class EventManager implements Listener
 	@EventHandler(priority=EventPriority.LOW)
 	public void onPlayerJoin(PlayerJoinEvent e)
 		{FLDatabase.createTempFile(e.getPlayer().getUniqueId());}
+	
 	@EventHandler(priority=EventPriority.LOW)
 	public void onPlayerQuit(PlayerQuitEvent e)
 		{FLDatabase.deleteTempFile(e.getPlayer().getUniqueId());}
