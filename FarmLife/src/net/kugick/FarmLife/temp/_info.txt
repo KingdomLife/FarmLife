@@ -1,5 +1,5 @@
 # 
-# Uploaded my current progress to have an overall view of the plugin. I don't have it split nicely into packages yet, so I'll just mash them into a temp dir.
+# Uploaded my current progress to have an overall view of the plugin. I don't have it split nicely into packages yet, so I just mashed them into a temp dir.
 # 
 # - sebcio98
 # 
