@@ -1,7 +1,7 @@
-author: kugick
+authors: [kugick, sebcio98]
 name: FarmLife
 version: 0.1
-main: net.kugick.FarmLife.Main
+main: net.kugick.FarmLife.FarmLife
 commands:
   FarmLife:
     description: FarmLife plugin main command.
