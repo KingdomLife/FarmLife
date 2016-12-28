@@ -1,4 +1,4 @@
-package net.kugick.FarmLife.Generation;
+package net.kugick.FarmLife.WorldGenerator;
 
 import java.io.File;
 import java.util.Arrays;
