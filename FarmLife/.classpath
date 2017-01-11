@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/github/FarmLife/FarmLife/ressources/WorldEdit.jar"/>
-	<classpathentry kind="lib" path="D:/github/FarmLife/FarmLife/ressources/WorldGuard.jar"/>
-	<classpathentry kind="lib" path="D:/github/FarmLife/FarmLife/ressources/PaperSpigot.jar"/>
+	<classpathentry kind="lib" path="C:/Users/10251/OneDrive/Documents/GitHub/FarmLife/ressources/PaperSpigot.jar"/>
+	<classpathentry kind="lib" path="C:/Users/10251/OneDrive/Documents/GitHub/FarmLife/ressources/WorldEdit.jar"/>
+	<classpathentry kind="lib" path="C:/Users/10251/OneDrive/Documents/GitHub/FarmLife/ressources/WorldGuard.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

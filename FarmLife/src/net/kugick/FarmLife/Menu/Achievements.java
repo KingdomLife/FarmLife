@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Notification implements CommandExecutor{
+public class Achievements implements CommandExecutor{
 	
 	//Command
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
@@ -24,15 +24,19 @@ public class Notification implements CommandExecutor{
 	}
 	
 	//Create the item & meta
+	private static ItemStack invItem(ItemStack stack, String name, List<String> lore){
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(name);
 		meta.setLore(lore);
 		stack.setItemMeta(meta);
 		return stack;
 	}
+
+	//Main menu #Achievements
+	public static void openMenu(Player p){
 		
 		//Name the menu
-		Inventory menu = Bukkit.createInventory(null, 54, "Notifications");
+		Inventory menu = Bukkit.createInventory(null, 54, "Achievements");
 
 		//Fill the inventory with stained glass panes before adding items.
 		int glassNumber = 0;
@@ -55,18 +59,16 @@ public class Notification implements CommandExecutor{
 			air.setItemMeta(airMeta);*/
 			menu.setItem(airNumber++, air);
 		}
-		
-		//Informations
-		menu.setItem(5, invItem(new ItemStack(Material.SLIME_BALL), ChatColor.BLUE + "Notifications", Arrays.asList(ChatColor.GRAY + "Hover the icons to view", ChatColor.GRAY + "the notification. Click the lava", ChatColor.GRAY + "bucket to clear notifications!")));
 
-		//Trash Notifications
-		menu.setItem(44, invItem(new ItemStack(Material.LAVA_BUCKET), ChatColor.RED + "Trash Notifications", Arrays.asList(ChatColor.GRAY + "Join an existing farm", ChatColor.YELLOW + "> Click to delete")));
+		//Informations
+		menu.setItem(5, invItem(new ItemStack(Material.DIAMOND_ORE), ChatColor.BLUE + "Achievements", Arrays.asList(ChatColor.GRAY + "Hover the icons to view")));
 		
 		//Return to menu
 		menu.setItem(45, invItem(new ItemStack(Material.COMPASS), ChatColor.RED + "Exit to Menu", null));
-		
-		//TODO DISPLAY NOTIFICATIONS
+
+		//TODO DISPLAY ACHIEVEMENTS
 
 		p.openInventory(menu);
+
 	}
 }
