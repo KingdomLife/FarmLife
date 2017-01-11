@@ -7,22 +7,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Notification implements CommandExecutor{
-	
+public class JoinFarm{
+
 	//Command
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		Player p = (Player)sender;
 		openMenu(p);
 		return false;
 	}
-	
+
 	//Create the item & meta
 	private static ItemStack invItem(ItemStack stack, String name, List<String> lore){
 		ItemMeta meta = stack.getItemMeta();
@@ -32,11 +31,11 @@ public class Notification implements CommandExecutor{
 		return stack;
 	}
 
-	//Main menu #Notification
+	//Main menu #JoinFarm
 	public static void openMenu(Player p){
-		
+
 		//Name the menu
-		Inventory menu = Bukkit.createInventory(null, 54, "Notifications");
+		Inventory menu = Bukkit.createInventory(null, 54, "Join Farm");
 
 		//Fill the inventory with stained glass panes before adding items.
 		int glassNumber = 0;
@@ -54,21 +53,21 @@ public class Notification implements CommandExecutor{
 		while(airNumber != 35){
 			ItemStack air = new ItemStack(Material.AIR);
 			/**ItemMeta airMeta = air.getItemMeta();
-			airMeta.setDisplayName("");
-			airMeta.setLore(Arrays.asList(""));
-			air.setItemMeta(airMeta);*/
+				airMeta.setDisplayName("");
+				airMeta.setLore(Arrays.asList(""));
+				air.setItemMeta(airMeta);*/
 			menu.setItem(airNumber++, air);
 		}
-		
+
 		//Informations
-		menu.setItem(5, invItem(new ItemStack(Material.SLIME_BALL), ChatColor.BLUE + "Notifications", Arrays.asList(ChatColor.GRAY + "Hover the icons to view", ChatColor.GRAY + "the notification. Click the lava", ChatColor.GRAY + "bucket to clear notifications!")));
+		menu.setItem(5, invItem(new ItemStack(Material.SLIME_BALL), ChatColor.BLUE + "Joining a Farm", Arrays.asList(ChatColor.GRAY + "Hover the icons to view", ChatColor.GRAY + "the notification. Click the lava", ChatColor.GRAY + "bucket to clear notifications!")));
 
 		//Trash Notifications
-		menu.setItem(44, invItem(new ItemStack(Material.LAVA_BUCKET), ChatColor.RED + "Trash Notifications", Arrays.asList(ChatColor.GRAY + "Join an existing farm", ChatColor.YELLOW + "> Click to delete")));
-		
+		menu.setItem(44, invItem(new ItemStack(Material.NAME_TAG), ChatColor.BLUE + "Search Farms", Arrays.asList(ChatColor.GRAY + "Filter through farms to", ChatColor.GRAY + "find the bext match!", ChatColor.YELLOW + "> Click to filter results")));
+
 		//Return to menu
 		menu.setItem(45, invItem(new ItemStack(Material.COMPASS), ChatColor.RED + "Exit to Menu", null));
-		
+
 		//TODO DISPLAY NOTIFICATIONS
 
 		p.openInventory(menu);
