@@ -17,7 +17,12 @@ public class FarmLife extends JavaPlugin
 	public void onEnable()
 	{
 		instance = this;
-		
+		SQLHandler.init();
+	}
+	
+	public void onDisable()
+	{
+		SQLHandler.destructor();
 	}
 	
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id)
