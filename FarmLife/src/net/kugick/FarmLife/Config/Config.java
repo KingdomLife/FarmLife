@@ -3,6 +3,7 @@ package net.kugick.FarmLife.Config;
 public class Config
 {
 	//Temporary config values, move to config file (maybe?)
+	//btw, this kind of setup is annoying, needs to be changed
 	//TODO fill in the user and password
 	public static enum DataType {db_user, db_password, db_ip, db_database, db_table};
 	
