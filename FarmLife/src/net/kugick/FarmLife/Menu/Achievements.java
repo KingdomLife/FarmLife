@@ -40,22 +40,23 @@ public class Achievements implements CommandExecutor{
 
 		//Fill the inventory with stained glass panes before adding items.
 		int index = 0;
-		ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)7);/// Seb - declaring a variable once and using it instead of creating new ones every iteration
-		ItemMeta paneMeta = item.getItemMeta();
+		ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)7);/// Seb - declaring a variable once and using it
+		ItemMeta paneMeta = item.getItemMeta();///                                   instead of creating new one every iteration.
 		paneMeta.setDisplayName("");
 		paneMeta.setLore(Arrays.asList(""));
 		item.setItemMeta(paneMeta);
-		while(index != 27)
-			menu.setItem(index++, glassPane);
+		while(index < 27)/// Seb - Using < instead of !=, because it feels much safer. It's theoritically possible
+			menu.setItem(index++, glassPane);/// for an iteration to be skipped in the modern nano technology.
+		///                                         Just presenting my opinion, use whichever you think is better.
 
 		//Make a blank space.
 		index = 10;
-		item = new ItemStack(Material.AIR);/// Seb - reusing already declared variables, no need for new ones
+		item = new ItemStack(Material.AIR);/// Seb - reusing already declared variables, no need for new ones.
 		/**ItemMeta airMeta = air.getItemMeta();
 		airMeta.setDisplayName("");
 		airMeta.setLore(Arrays.asList(""));
 		air.setItemMeta(airMeta);*/
-		while(index != 35)
+		while(index < 35)
 			menu.setItem(index++, item);
 
 		//Informations
