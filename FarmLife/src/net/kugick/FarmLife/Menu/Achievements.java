@@ -39,26 +39,24 @@ public class Achievements implements CommandExecutor{
 		Inventory menu = Bukkit.createInventory(null, 54, "Achievements");
 
 		//Fill the inventory with stained glass panes before adding items.
-		int glassNumber = 0;
-		while(glassNumber != 27){
-			ItemStack glassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)7);
-			ItemMeta paneMeta = glassPane.getItemMeta();
-			paneMeta.setDisplayName("");
-			paneMeta.setLore(Arrays.asList(""));
-			glassPane.setItemMeta(paneMeta);
-			menu.setItem(glassNumber++, glassPane);
-		}
+		int index = 0;
+		ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)7);/// Seb - declaring a variable once and using it instead of creating new ones every iteration
+		ItemMeta paneMeta = item.getItemMeta();
+		paneMeta.setDisplayName("");
+		paneMeta.setLore(Arrays.asList(""));
+		item.setItemMeta(paneMeta);
+		while(index != 27)
+			menu.setItem(index++, glassPane);
 
 		//Make a blank space.
-		int airNumber = 10;
-		while(airNumber != 35){
-			ItemStack air = new ItemStack(Material.AIR);
-			/**ItemMeta airMeta = air.getItemMeta();
-			airMeta.setDisplayName("");
-			airMeta.setLore(Arrays.asList(""));
-			air.setItemMeta(airMeta);*/
-			menu.setItem(airNumber++, air);
-		}
+		index = 10;
+		item = new ItemStack(Material.AIR);/// Seb - reusing already declared variables, no need for new ones
+		/**ItemMeta airMeta = air.getItemMeta();
+		airMeta.setDisplayName("");
+		airMeta.setLore(Arrays.asList(""));
+		air.setItemMeta(airMeta);*/
+		while(index != 35)
+			menu.setItem(index++, item);
 
 		//Informations
 		menu.setItem(5, invItem(new ItemStack(Material.DIAMOND_ORE), ChatColor.BLUE + "Achievements", Arrays.asList(ChatColor.GRAY + "Hover the icons to view")));
