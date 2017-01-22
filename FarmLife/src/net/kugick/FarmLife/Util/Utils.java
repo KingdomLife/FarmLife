@@ -39,6 +39,20 @@ public class Utils
 	}
 	
 	/// #### ItemStack ####
+	/**
+	 * 
+	 * examples:
+	 *   create a new item:
+	 *     ItemStack item = Utils.newItem(Material.WOOL, 10, "Cool Wool", "This is a block of wool~for cool people.", (byte)15);
+	 *   edit an item:
+	 *     item = Utils.newItem(item, null, -1, null, null, (byte)5); //changed wool color to green leaving previous material, amount, name and lore
+	 * 
+	 * @param material default: null
+	 * @param count default: -1
+	 * @param name default: null
+	 * @param lore default: null
+	 * @return A fresh ItemStack.
+	 */
 	public static ItemStack newItem(Material material, int count, String name, String lore)
 		{return newItem(material, count, name, lore, (byte)0);}
 	public static ItemStack newItem(Material material, int count, String name, String lore, byte color)
