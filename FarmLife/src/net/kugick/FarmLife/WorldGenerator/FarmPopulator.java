@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Random;
 
+import net.kugick.FarmLife.Util.FarmLogger;
 import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 
@@ -50,7 +51,7 @@ public class FarmPopulator extends BlockPopulator
 						chunkedData[x/16][z/16][index2] = data[index];
 					}
 		}
-		catch(Exception e) {System.out.println("Could not load farm schematic file!"); e.printStackTrace();}
+		catch(Exception e) {FarmLogger.warning2("Could not load farm schematic file!"); e.printStackTrace();}
 	}
 	
 	@SuppressWarnings("deprecation")
