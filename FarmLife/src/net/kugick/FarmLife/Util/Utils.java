@@ -131,22 +131,24 @@ public class Utils {
 	//////////////////
 	// PACKET UTILS //
 	//////////////////
-	private static Object packet = null;
-	private static Object nmsPlayer = null;
+	private static Object respawnPacket = null;
 	
 	public static void sendRespawnPacket(Player p) throws Exception {
-		if (nmsPlayer == null) nmsPlayer = Player.class.getMethod("getHandle").invoke(p);
+		Object nmsPlayer = Player.class.getMethod("getHandle").invoke(p);
 		
-		if (packet == null) {
-			packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
-			Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+		if (respawnPacket == null) {
+			respawnPacket = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
 			
-			for(Object ob : enumClass.getEnumConstants())
-				if(ob.toString().equals("PERFORM_RESPAWN"))
-					packet = packet.getClass().getConstructor(enumClass).newInstance(ob);
+			Class<?> enumClasses = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+			
+			for(Object ob : enumClasses.getEnumConstants()) {
+				if(ob.toString().equals("PERFORM_RESPAWN")) {
+					respawnPacket = respawnPacket.getClass().getConstructor(enumClasses).newInstance(ob);
+				}
+			}
 		}
 
 		Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
-		con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
+		con.getClass().getMethod("a", respawnPacket.getClass()).invoke(con, respawnPacket);
 	}
 }
