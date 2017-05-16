@@ -4,17 +4,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.plugin.PluginManager;
 
-public class Utils
-{
-	/// #### String ####
-	public static String wrap(String inp, String paper)
-		{return paper + inp + paper;}
-	public static String getStringFromArray(String[] array, int startIndex, String separator)
-	{
+import net.kugick.FarmLife.FarmLife;
+
+public class Utils {
+	public static final String _21 = "§";
+	private static PluginManager pluginManager = Bukkit.getServer().getPluginManager();
+	
+	//////////////////
+	// STRING UTILS //
+	//////////////////
+	public static String getStringFromArray(String[] array, int startIndex, String separator) {
 		String opt = array[startIndex++];
 		
 		while (startIndex<array.length)
@@ -22,14 +32,12 @@ public class Utils
 		
 		return opt;
 	}
-	public static List<String> stringDivider(String s)
-	{
+	public static List<String> stringDivider(String s) {
 		List<String> lines = new ArrayList<String>();
 		if (s == null) return lines;
 		int i=-1, count=33;
 		
-		for(String ss : s.split(" "))
-		{
+		for(String ss : s.split(" ")) {
 			count+=ss.length()+1;
 			if (count > 32) {lines.add(ss); i++; count=ss.length();}
 			else {lines.set(i, lines.get(i) + " " + ss);}
@@ -38,7 +46,9 @@ public class Utils
 		return lines;
 	}
 	
-	/// #### ItemStack ####
+	//////////////
+	// NEW ITEM //
+	//////////////
 	/**
 	 * 
 	 * examples:
@@ -53,29 +63,37 @@ public class Utils
 	 * @param lore default: null
 	 * @return A fresh ItemStack.
 	 */
-	public static ItemStack newItem(Material material, int count, String name, String lore)
-		{return newItem(material, count, name, lore, (byte)0);}
-	public static ItemStack newItem(Material material, int count, String name, String lore, byte color)
-		{return newItem(material, count, name.replaceAll("&", "§"), lore=="" ? null : Arrays.asList(lore.replaceAll("&", "§").split("~")), color);}
-	public static ItemStack newItem(Material material, int count, String name, List<String> lore, byte color)
-	{
+	public static ItemStack newItem(Material material, int count, String name, String lore) {
+		return newItem(material, count, name, lore, (byte)0);
+	}
+	public static ItemStack newItem(Material material, int count, String name, String lore, int color) {
+		return newItem(material, count, name, lore, color, -1, -1);
+	}
+	public static ItemStack newItem(Material material, int count, String name, String lore, int red, int green, int blue) {
+		return newItem(material, count, name.replaceAll("&", _21), lore=="" ? null : Arrays.asList(lore.replaceAll("&", _21).split("~")), red, green, blue);
+	}
+	public static ItemStack newItem(Material material, int count, String name, List<String> lore, int red, int green, int blue) {
 		ItemStack item;
 		if (count < 0) count = 1;
-		if (color != 0) item = new ItemStack(material, count, color);
+		if (green < 0 && blue < 0) item = new ItemStack(material, count, (byte)red);
 		else item = new ItemStack(material, count);
 		
 		ItemMeta meta = item.getItemMeta();
 		if (name != null) meta.setDisplayName(name);
 		if (lore != null) meta.setLore(lore);
+		if (meta instanceof LeatherArmorMeta && red >= 0 && green >= 0 && blue >= 0) {
+			((LeatherArmorMeta)meta).setDisplayName(name);
+			((LeatherArmorMeta)meta).setColor(Color.fromRGB(red, green, blue));
+		}
 		item.setItemMeta(meta);
 		
 		return item;
 	}
-	public static ItemStack newItem(ItemStack item, Material material, int count, String name, String lore, short color)
-		{return newItem(item, material, count, name==null||name==""?null:name.replaceAll("&", "§"), lore=="" ? null : Arrays.asList(lore.replaceAll("&", "§").split("~")), color);}
+	public static ItemStack newItem(ItemStack item, Material material, int count, String name, String lore, short color) {
+		return newItem(item, material, count, name==null||name==""?null:name.replaceAll("&", _21), lore=="" ? null : Arrays.asList(lore.replaceAll("&", _21).split("~")), color);
+	}
 	@SuppressWarnings("deprecation")
-	public static ItemStack newItem(ItemStack item, Material material, int count, String name, List<String> lore, short color)
-	{
+	public static ItemStack newItem(ItemStack item, Material material, int count, String name, List<String> lore, short color) {
 		ItemStack newItem;
 		if (color > 0) newItem = new ItemStack(material==null ? item.getType() : material, count<0 ? item.getAmount() : count, (byte)color);
 		else newItem = new ItemStack(material==null ? item.getType() : material, count<0 ? item.getAmount() : count, item.getData().getData());
@@ -85,5 +103,40 @@ public class Utils
 		newItem.setItemMeta(meta);
 		
 		return newItem;
+	}
+	
+	////////////////////
+	// PLUGIN MANAGER //
+	////////////////////
+	public static PluginManager getPluginManager() {
+		return pluginManager;
+	}
+	public static void registerListener(Listener l) {
+		getPluginManager().registerEvents(l, FarmLife.getInstance());
+	}
+	public static void unregisterListener(Listener l) {
+		HandlerList.unregisterAll(l);
+	}
+	
+	//////////////////
+	// PACKET UTILS //
+	//////////////////
+	private static Object packet = null;
+	private static Object nmsPlayer = null;
+	
+	public static void sendRespawnPacket(Player p) throws Exception {
+		if (nmsPlayer == null) nmsPlayer = Player.class.getMethod("getHandle").invoke(p);
+		
+		if (packet == null) {
+			packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+			Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+			
+			for(Object ob : enumClass.getEnumConstants())
+				if(ob.toString().equals("PERFORM_RESPAWN"))
+					packet = packet.getClass().getConstructor(enumClass).newInstance(ob);
+		}
+
+		Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+		con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
 	}
 }
