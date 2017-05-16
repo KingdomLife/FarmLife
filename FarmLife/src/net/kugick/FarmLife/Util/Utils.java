@@ -24,6 +24,9 @@ public class Utils {
 	//////////////////
 	// STRING UTILS //
 	//////////////////
+	public static String coloroze(String s) {
+		return s.replaceAll("&", _21);
+	}
 	public static String getStringFromArray(String[] array, int startIndex, String separator) {
 		String opt = array[startIndex++];
 		
@@ -32,15 +35,22 @@ public class Utils {
 		
 		return opt;
 	}
-	public static List<String> stringDivider(String s) {
+	public static List<String> stringDivider(String s, String seperator) {
+		return stringDivider(s, seperator, 32);
+	}
+	public static List<String> stringDivider(String s, String seperator, int linelength) {
 		List<String> lines = new ArrayList<String>();
 		if (s == null) return lines;
-		int i=-1, count=33;
+		int i=-1, count=linelength+1;
 		
-		for(String ss : s.split(" ")) {
-			count+=ss.length()+1;
-			if (count > 32) {lines.add(ss); i++; count=ss.length();}
-			else {lines.set(i, lines.get(i) + " " + ss);}
+		for (String ss : s.split(seperator)) {
+			count+=ss.length()+seperator.length();
+			if (count > linelength) {
+				lines.add(ss); i++; count=ss.length();
+			}
+			else {
+				lines.set(i, lines.get(i) + seperator + ss);
+			}
 		}
 		
 		return lines;
